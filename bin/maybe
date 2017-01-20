@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+var path = require('path');
+var exists = require('fs').existsSync;
+var co = require('co');
+var prompt = require('co-prompt');
+var rm = require('rimraf').sync;
+var program = require('commander');
+var chalk = require('chalk');
+var generate = require('../lib/index');
+
+program
+	.version(require('../package.json').version)
+	.usage('[project-name]')
+
+/**
+ * Help
+ */
+program.on('--help', function() {
+	console.log('  Example:');
+	console.log();
+	console.log(chalk.grey('    #create a new project with vue and webpack'));
+	console.log('    $maybe my-project');
+	console.log();
+})
+
+/**
+ * Help
+ * @return {[type]} [description]
+ */
+function help() {
+	program.parse(process.argv);
+	if(program.args.length < 1) return program.help();
+}
+help();
+
+/**
+ * Padding
+ */
+console.log();
+process.on('exit', function() {
+	console.log()
+});
+
+/**
+ * Settings
+ */
+var projectPath = path.resolve(program.args[0]);
+
+if(exists(projectPath)) {
+	co(function *() {
+		var answer = yield prompt(chalk.red('  Notice: ') +'directory is existed, continue will overwritten this directory' + chalk.gray(' (y/n): '))
+		if(answer === 'y') {
+			rm(projectPath);
+			console.log('  Delete %s.', projectPath)
+			console.log();
+			generate(projectPath)
+		} else {
+			process.exit()
+		}
+	})
+} else {
+	generate(projectPath);
+}
+

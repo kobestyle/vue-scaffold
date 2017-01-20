@@ -1,0 +1,29 @@
+{
+  "name": "vue-scaffold-gy",
+  "version": "1.0.2",
+  "description": "a scaffolding for vue start.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "maybe": "bin/maybe"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "keywords": [
+    "vue",
+    "scaffold"
+  ],
+  "author": "kobestyle1991",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.9.0",
+    "ora": "^0.3.0",
+    "rimraf": "^2.5.4"
+  }
+}
